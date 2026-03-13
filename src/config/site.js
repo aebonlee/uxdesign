@@ -31,7 +31,6 @@ const site = {
 
   // 네비게이션 메뉴
   menuItems: [
-    { path: '/', labelKey: 'nav.home' },
     {
       labelKey: 'site.nav.cxd',
       path: '/cxd/what-is-cxd',
@@ -95,7 +94,6 @@ const site = {
 
   // 푸터 바로가기 링크
   footerLinks: [
-    { path: '/', labelKey: 'nav.home' },
     { path: '/cxd/what-is-cxd', labelKey: 'site.nav.cxd' },
     { path: '/ux', labelKey: 'site.nav.uxStrategy' },
     { path: '/ai-tips', labelKey: 'site.nav.aiTips' },
