@@ -185,6 +185,30 @@ D:\uxdesign/
 
 ---
 
+## 2026-03-14 (Day 2) - UI 개선 및 Supabase 연동
+
+### 네비게이션 바 개선
+- **'홈' 메뉴 삭제**: 로고 클릭으로 홈 이동 가능하므로 중복 메뉴 제거 (site.js menuItems, footerLinks)
+- **메뉴 1줄 표시 최적화**:
+  - 로고 폰트: 28px → 22px, `white-space: nowrap` 적용
+  - 메뉴 링크 패딩: 14px → 10px, `white-space: nowrap` 적용
+  - 메뉴 폰트 크기: 14px → 15px (가독성 향상)
+  - `nav-wrapper`, `nav-menu`: `flex-wrap: nowrap` 적용
+  - `nav-actions` 간격: 12px → 8px
+  - `nav-link::after` 밑줄 위치: 14px → 10px
+
+### Supabase 환경변수 연동
+- `.env` 파일 생성 (koreatech과 동일한 Supabase 프로젝트 공유)
+- 빌드 시 Supabase 클라이언트 포함 (JS 번들: 287KB → 470KB)
+
+### 빌드 & 배포
+- `npm run build` 성공: 149 modules, 56 output files
+- Total CSS: 96.96 kB (gzip: 16.94 kB)
+- Main JS bundle: 470.16 kB (gzip: 138.46 kB)
+- GitHub Pages 배포 완료 (`npx gh-pages -d dist`)
+
+---
+
 ## 총 파일 수
 - **복사**: ~50개 (인프라, 스타일, AI Tips, 강의, 커뮤니티, 인증)
 - **신규 작성/수정**: ~25개 (설정, 과목 소개, UX 주차별 학습)
