@@ -109,7 +109,9 @@ koreatech 프로젝트에서 다음 파일들을 복사:
 ```
 D:\uxdesign/
 ├── public/
-│   └── favicon.svg
+│   ├── favicon.svg
+│   ├── og-image.png
+│   └── CNAME
 ├── src/
 │   ├── main.jsx
 │   ├── App.jsx
@@ -206,6 +208,33 @@ D:\uxdesign/
 - Total CSS: 96.96 kB (gzip: 16.94 kB)
 - Main JS bundle: 470.16 kB (gzip: 138.46 kB)
 - GitHub Pages 배포 완료 (`npx gh-pages -d dist`)
+
+---
+
+## 2026-03-15 (Day 3) - OG 이미지 생성 및 메타 태그 최적화
+
+### Open Graph 미리보기 이미지 생성
+- `public/og-image.png` 생성 (1200×630px, 92KB)
+  - 파란색 그라디언트 배경 (#0046C8 → #002E8A → #1E3A5F)
+  - 타이틀: "고객경험을 디자인하는 콘텐츠 전략"
+  - 서브: UX 리서치 · 콘텐츠 전략 · UX 라이팅 · 비주얼 디자인 · 성과 측정
+  - 브랜드: CXD Content Strategy / uxdesign.dreamitbiz.com / DreamIT Biz
+  - sharp 라이브러리를 사용하여 SVG → PNG 변환
+
+### OG 메타 태그 수정
+- `index.html`: og:image:width 400→1200, og:image:height 302→630
+- `src/components/SEOHead.jsx`: 동일 크기 수정
+- 카카오톡/페이스북/트위터 공유 미리보기 최적화
+
+### OG 태그 현황
+```
+og:url         https://uxdesign.dreamitbiz.com
+og:title       고객경험디자인 콘텐츠 전략 | UX Design
+og:description 고객경험디자인(CXD) 콘텐츠 전략 학습 - UX 리서치, 콘텐츠 전략, 비주얼 디자인까지 한곳에서
+og:type        website
+og:image       https://uxdesign.dreamitbiz.com/og-image.png (1200×630)
+og:site_name   고객경험디자인 콘텐츠 전략
+```
 
 ---
 
