@@ -1,5 +1,7 @@
 {
   "name": "uxdesign-cxd",
+  "description": "UX/CXD 디자인",
+  "homepage": "https://uxdesign.dreamitbiz.com",
   "private": true,
   "version": "1.0.0",
   "type": "module",
