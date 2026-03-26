@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd.exe /c \"if exist D:\\\\koreatech \\(echo EXISTS\\) else \\(echo NOT_FOUND\\)\")",
+      "Bash(cmd.exe /c \"dir /s /b D:\\\\koreatech\\\\src\\\\*.jsx D:\\\\koreatech\\\\src\\\\*.js D:\\\\koreatech\\\\src\\\\*.css 2>nul | sort\":*)"
+    ]
+  }
+}
