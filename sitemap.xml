@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 과목 소개 (CXD) -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/cxd/what-is-cxd</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/cxd/weekly-plan</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/cxd/syllabus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/cxd/practice-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- UX 콘텐츠 전략 메인 -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- UX 주차별 학습 -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/intro</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/research</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/journey-map</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/content-audit</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/information-architecture</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/ux-writing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/content-strategy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/visual-design</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/ui-content</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/personalization</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/multichannel</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/cms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ux/analytics</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- AI Tips 메인 -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- AI Tips 서브 페이지 -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/chatgpt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/claude</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/gemini</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/copilot</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/prompt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/coding</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/writing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/ai-tips/learning</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Lectures -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/lectures</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/lectures/materials</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- References -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/references</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Community -->
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/community/board</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/community/gallery</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/community/portfolio</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://uxdesign.dreamitbiz.com/community/websites</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
