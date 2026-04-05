@@ -30,7 +30,7 @@ export const getPosts = async (page = 1, category = null) => {
   if (!client) return { posts: [], total: 0 };
 
   let query = client
-    .from('posts')
+    .from('ux_posts')
     .select('*', { count: 'exact' })
     .eq('site_domain', SITE_DOMAIN)
     .order('created_at', { ascending: false });
@@ -61,7 +61,7 @@ export const getPostById = async (id) => {
   if (!client) return null;
 
   const { data, error } = await client
-    .from('posts')
+    .from('ux_posts')
     .select('*')
     .eq('id', id)
     .single();
@@ -82,7 +82,7 @@ export const createPost = async (postData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('posts')
+    .from('ux_posts')
     .insert({ ...postData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -99,7 +99,7 @@ export const deletePost = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('posts')
+    .from('ux_posts')
     .delete()
     .eq('id', id);
 
@@ -113,10 +113,10 @@ export const incrementViews = async (id) => {
   const client = getSupabase();
   if (!client) return;
 
-  await client.rpc('increment_views', { post_id: id }).catch(() => {
+  await client.rpc('ux_increment_views', { post_id: id }).catch(() => {
     // RPC 미존재 시 직접 업데이트
     client
-      .from('posts')
+      .from('ux_posts')
       .update({ views: client.sql`views + 1` })
       .eq('id', id)
       .then(() => {})
@@ -132,7 +132,7 @@ export const getComments = async (postId) => {
   if (!client) return [];
 
   const { data, error } = await client
-    .from('comments')
+    .from('ux_comments')
     .select('*')
     .eq('post_id', postId)
     .order('created_at', { ascending: true });
@@ -153,7 +153,7 @@ export const createComment = async (commentData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('comments')
+    .from('ux_comments')
     .insert({ ...commentData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -170,7 +170,7 @@ export const deleteComment = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('comments')
+    .from('ux_comments')
     .delete()
     .eq('id', id);
 
@@ -187,7 +187,7 @@ export const searchPosts = async (query) => {
   const pattern = `%${query.trim()}%`;
 
   const { data, error } = await client
-    .from('posts')
+    .from('ux_posts')
     .select('id, title, author_name, created_at')
     .eq('site_domain', SITE_DOMAIN)
     .or(`title.ilike.${pattern},content.ilike.${pattern}`)
@@ -210,7 +210,7 @@ export const getLectures = async () => {
   if (!client) return [];
 
   const { data, error } = await client
-    .from('lectures')
+    .from('ux_lectures')
     .select('*')
     .eq('site_domain', SITE_DOMAIN)
     .eq('is_published', true)
@@ -232,7 +232,7 @@ export const getLectureById = async (id) => {
   if (!client) return null;
 
   const { data, error } = await client
-    .from('lectures')
+    .from('ux_lectures')
     .select('*')
     .eq('id', id)
     .single();
@@ -253,7 +253,7 @@ export const createLecture = async (lectureData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('lectures')
+    .from('ux_lectures')
     .insert({ ...lectureData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -270,7 +270,7 @@ export const updateLecture = async (id, lectureData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('lectures')
+    .from('ux_lectures')
     .update({ ...lectureData, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
@@ -288,7 +288,7 @@ export const deleteLecture = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('lectures')
+    .from('ux_lectures')
     .delete()
     .eq('id', id);
 
@@ -302,7 +302,7 @@ export const incrementLectureViews = async (id) => {
   const client = getSupabase();
   if (!client) return;
 
-  await client.rpc('increment_lecture_views', { lecture_id: id }).catch(() => {});
+  await client.rpc('ux_increment_lecture_views', { lecture_id: id }).catch(() => {});
 };
 
 /**
@@ -347,7 +347,7 @@ export const getGalleryItems = async (page = 1, category = null) => {
   if (!client) return { items: [], total: 0 };
 
   let query = client
-    .from('gallery')
+    .from('ux_gallery')
     .select('*', { count: 'exact' })
     .eq('site_domain', SITE_DOMAIN)
     .order('created_at', { ascending: false });
@@ -375,7 +375,7 @@ export const getGalleryItemById = async (id) => {
   if (!client) return null;
 
   const { data, error } = await client
-    .from('gallery')
+    .from('ux_gallery')
     .select('*')
     .eq('id', id)
     .single();
@@ -393,7 +393,7 @@ export const createGalleryItem = async (itemData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('gallery')
+    .from('ux_gallery')
     .insert({ ...itemData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -407,7 +407,7 @@ export const updateGalleryItem = async (id, itemData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('gallery')
+    .from('ux_gallery')
     .update(itemData)
     .eq('id', id)
     .select()
@@ -422,7 +422,7 @@ export const deleteGalleryItem = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('gallery')
+    .from('ux_gallery')
     .delete()
     .eq('id', id);
 
@@ -433,7 +433,7 @@ export const incrementGalleryViews = async (id) => {
   const client = getSupabase();
   if (!client) return;
 
-  await client.rpc('increment_gallery_views', { item_id: id }).catch(() => {});
+  await client.rpc('ux_increment_gallery_views', { item_id: id }).catch(() => {});
 };
 
 export const getGalleryComments = async (galleryId) => {
@@ -441,7 +441,7 @@ export const getGalleryComments = async (galleryId) => {
   if (!client) return [];
 
   const { data, error } = await client
-    .from('gallery_comments')
+    .from('ux_gallery_comments')
     .select('*')
     .eq('gallery_id', galleryId)
     .order('created_at', { ascending: true });
@@ -459,7 +459,7 @@ export const createGalleryComment = async (commentData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('gallery_comments')
+    .from('ux_gallery_comments')
     .insert({ ...commentData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -473,7 +473,7 @@ export const deleteGalleryComment = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('gallery_comments')
+    .from('ux_gallery_comments')
     .delete()
     .eq('id', id);
 
@@ -492,7 +492,7 @@ export const getPortfolios = async (page = 1) => {
   const to = from + PORTFOLIO_PER_PAGE - 1;
 
   const { data, error, count } = await client
-    .from('portfolio')
+    .from('ux_portfolio')
     .select('*', { count: 'exact' })
     .eq('site_domain', SITE_DOMAIN)
     .order('created_at', { ascending: false })
@@ -511,7 +511,7 @@ export const getPortfolioById = async (id) => {
   if (!client) return null;
 
   const { data, error } = await client
-    .from('portfolio')
+    .from('ux_portfolio')
     .select('*')
     .eq('id', id)
     .single();
@@ -529,7 +529,7 @@ export const createPortfolio = async (portfolioData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('portfolio')
+    .from('ux_portfolio')
     .insert({ ...portfolioData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -543,7 +543,7 @@ export const updatePortfolio = async (id, portfolioData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('portfolio')
+    .from('ux_portfolio')
     .update(portfolioData)
     .eq('id', id)
     .select()
@@ -558,7 +558,7 @@ export const deletePortfolio = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('portfolio')
+    .from('ux_portfolio')
     .delete()
     .eq('id', id);
 
@@ -569,7 +569,7 @@ export const incrementPortfolioViews = async (id) => {
   const client = getSupabase();
   if (!client) return;
 
-  await client.rpc('increment_portfolio_views', { item_id: id }).catch(() => {});
+  await client.rpc('ux_increment_portfolio_views', { item_id: id }).catch(() => {});
 };
 
 export const getPortfolioComments = async (portfolioId) => {
@@ -577,7 +577,7 @@ export const getPortfolioComments = async (portfolioId) => {
   if (!client) return [];
 
   const { data, error } = await client
-    .from('portfolio_comments')
+    .from('ux_portfolio_comments')
     .select('*')
     .eq('portfolio_id', portfolioId)
     .order('created_at', { ascending: true });
@@ -595,7 +595,7 @@ export const createPortfolioComment = async (commentData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('portfolio_comments')
+    .from('ux_portfolio_comments')
     .insert({ ...commentData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -609,7 +609,7 @@ export const deletePortfolioComment = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('portfolio_comments')
+    .from('ux_portfolio_comments')
     .delete()
     .eq('id', id);
 
@@ -625,7 +625,7 @@ export const getWebsites = async (page = 1, category = null) => {
   if (!client) return { items: [], total: 0 };
 
   let query = client
-    .from('websites')
+    .from('ux_websites')
     .select('*', { count: 'exact' })
     .eq('site_domain', SITE_DOMAIN)
     .order('created_at', { ascending: false });
@@ -653,7 +653,7 @@ export const getWebsiteById = async (id) => {
   if (!client) return null;
 
   const { data, error } = await client
-    .from('websites')
+    .from('ux_websites')
     .select('*')
     .eq('id', id)
     .single();
@@ -671,7 +671,7 @@ export const createWebsite = async (itemData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('websites')
+    .from('ux_websites')
     .insert({ ...itemData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -685,7 +685,7 @@ export const updateWebsite = async (id, itemData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('websites')
+    .from('ux_websites')
     .update(itemData)
     .eq('id', id)
     .select()
@@ -700,7 +700,7 @@ export const deleteWebsite = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('websites')
+    .from('ux_websites')
     .delete()
     .eq('id', id);
 
@@ -711,7 +711,7 @@ export const incrementWebsiteViews = async (id) => {
   const client = getSupabase();
   if (!client) return;
 
-  await client.rpc('increment_website_views', { item_id: id }).catch(() => {});
+  await client.rpc('ux_increment_website_views', { item_id: id }).catch(() => {});
 };
 
 export const getWebsiteComments = async (websiteId) => {
@@ -719,7 +719,7 @@ export const getWebsiteComments = async (websiteId) => {
   if (!client) return [];
 
   const { data, error } = await client
-    .from('websites_comments')
+    .from('ux_websites_comments')
     .select('*')
     .eq('website_id', websiteId)
     .order('created_at', { ascending: true });
@@ -737,7 +737,7 @@ export const createWebsiteComment = async (commentData) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { data, error } = await client
-    .from('websites_comments')
+    .from('ux_websites_comments')
     .insert({ ...commentData, site_domain: SITE_DOMAIN })
     .select()
     .single();
@@ -751,7 +751,7 @@ export const deleteWebsiteComment = async (id) => {
   if (!client) throw new Error('Supabase not configured');
 
   const { error } = await client
-    .from('websites_comments')
+    .from('ux_websites_comments')
     .delete()
     .eq('id', id);
 

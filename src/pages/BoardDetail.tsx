@@ -3,52 +3,45 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import {
-  getWebsiteById,
-  deleteWebsite,
-  incrementWebsiteViews,
-  getWebsiteComments,
-  createWebsiteComment,
-  deleteWebsiteComment,
-} from '../utils/supabase';
+import { getPostById, deletePost, incrementViews, getComments, createComment, deleteComment } from '../utils/supabase';
 import SEOHead from '../components/SEOHead';
 
-const WebsiteDetail = () => {
+const BoardDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { user, isAdmin } = useAuth();
   const { showToast } = useToast();
 
-  const [item, setItem] = useState(null);
+  const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    loadItem();
+    loadPost();
   }, [id]);
 
-  const loadItem = async () => {
+  const loadPost = async () => {
     setLoading(true);
-    const data = await getWebsiteById(id);
-    setItem(data);
+    const data = await getPostById(id);
+    setPost(data);
     if (data) {
-      incrementWebsiteViews(id);
-      const cmts = await getWebsiteComments(id);
+      incrementViews(id);
+      const cmts = await getComments(id);
       setComments(cmts);
     }
     setLoading(false);
   };
 
   const handleDelete = async () => {
-    if (!window.confirm(t('site.websites.deleteConfirm'))) return;
+    if (!window.confirm(t('site.board.deleteConfirm'))) return;
     try {
-      await deleteWebsite(id);
+      await deletePost(id);
       showToast('삭제되었습니다.', 'success');
-      navigate('/community/websites');
-    } catch (err) {
+      navigate('/community/board');
+    } catch (err: any) {
       showToast(err.message, 'error');
     }
   };
@@ -57,16 +50,16 @@ const WebsiteDetail = () => {
     if (!commentText.trim()) return;
     setSubmitting(true);
     try {
-      await createWebsiteComment({
-        website_id: Number(id),
+      await createComment({
+        post_id: Number(id),
         user_id: user.id,
         author_name: user.user_metadata?.full_name || user.email,
         content: commentText.trim(),
       });
       setCommentText('');
-      const cmts = await getWebsiteComments(id);
+      const cmts = await getComments(id);
       setComments(cmts);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     } finally {
       setSubmitting(false);
@@ -76,12 +69,21 @@ const WebsiteDetail = () => {
   const handleCommentDelete = async (commentId) => {
     if (!window.confirm(t('comments.deleteConfirm'))) return;
     try {
-      await deleteWebsiteComment(commentId);
-      const cmts = await getWebsiteComments(id);
+      await deleteComment(commentId);
+      const cmts = await getComments(id);
       setComments(cmts);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     }
+  };
+
+  const getCategoryLabel = (cat) => {
+    const map = {
+      notice: t('site.board.notice'),
+      question: t('site.board.question'),
+      free: t('site.board.free'),
+    };
+    return map[cat] || cat;
   };
 
   if (loading) {
@@ -94,72 +96,55 @@ const WebsiteDetail = () => {
     );
   }
 
-  if (!item) {
+  if (!post) {
     return (
       <section className="section">
         <div className="container">
-          <div className="board-empty">{t('site.websites.notFound')}</div>
-          <Link to="/community/websites" className="board-btn">{t('site.websites.backToList')}</Link>
+          <div className="board-empty">{t('site.board.noPost')}</div>
+          <Link to="/community/board" className="board-btn">{t('site.board.backToList')}</Link>
         </div>
       </section>
     );
   }
 
-  const isAuthor = user?.id === item.user_id;
+  const isAuthor = user?.id === post.user_id;
 
   return (
     <>
-      <SEOHead title={item.title} path={`/community/websites/${id}`} />
+      <SEOHead title={post.title} path={`/community/board/${id}`} />
 
       <section className="page-header">
         <div className="container">
-          <h1>{t('site.websites.title')}</h1>
+          <h1>{t('site.board.title')}</h1>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <div className="board-detail">
-            {item.image_url && (
-              <div className="gallery-detail-image">
-                <img src={item.image_url} alt={item.title} />
-              </div>
-            )}
-
             <div className="board-detail-header">
-              <h2 className="board-detail-title">{item.title}</h2>
+              <span className={`board-badge badge-${post.category}`}>
+                {getCategoryLabel(post.category)}
+              </span>
+              <h2 className="board-detail-title">{post.title}</h2>
               <div className="board-detail-meta">
-                <span>{item.author_name}</span>
-                <span>{new Date(item.created_at).toLocaleDateString('ko-KR')}</span>
-                <span>{t('site.websites.views')}: {item.views || 0}</span>
+                <span>{post.author_name}</span>
+                <span>{new Date(post.created_at).toLocaleDateString('ko-KR')}</span>
+                <span>{t('site.board.views')}: {post.views || 0}</span>
               </div>
             </div>
 
-            <div style={{ padding: '12px 24px', borderBottom: '1px solid var(--border-light)' }}>
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className="board-btn primary">
-                {t('site.websites.visitSite')} ↗
-              </a>
-              <span className="website-url" style={{ marginLeft: '12px' }}>{item.url}</span>
+            <div className="board-detail-content">
+              {post.content.split('\n').map((line, i) => (
+                <p key={i}>{line || '\u00A0'}</p>
+              ))}
             </div>
-
-            {item.description && (
-              <div className="board-detail-content">
-                {item.description.split('\n').map((line, i) => (
-                  <p key={i}>{line || '\u00A0'}</p>
-                ))}
-              </div>
-            )}
 
             <div className="board-detail-actions">
-              <Link to="/community/websites" className="board-btn">{t('site.websites.backToList')}</Link>
-              {(isAuthor || isAdmin) && (
-                <Link to={`/community/websites/edit/${id}`} className="board-btn">
-                  {t('site.websites.edit')}
-                </Link>
-              )}
+              <Link to="/community/board" className="board-btn">{t('site.board.backToList')}</Link>
               {(isAuthor || isAdmin) && (
                 <button className="board-btn danger" onClick={handleDelete}>
-                  {t('site.websites.delete')}
+                  {t('site.board.delete')}
                 </button>
               )}
             </div>
@@ -215,4 +200,4 @@ const WebsiteDetail = () => {
   );
 };
 
-export default WebsiteDetail;
+export default BoardDetail;

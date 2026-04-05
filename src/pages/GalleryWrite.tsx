@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import { createWebsite, updateWebsite, getWebsiteById } from '../utils/supabase';
+import { createGalleryItem, updateGalleryItem, getGalleryItemById } from '../utils/supabase';
 import SEOHead from '../components/SEOHead';
 
-const WebsiteWrite = () => {
+const GalleryWrite = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { t } = useLanguage();
@@ -17,9 +17,9 @@ const WebsiteWrite = () => {
 
   const [form, setForm] = useState({
     title: '',
-    category: 'education',
-    url: '',
+    category: 'coding',
     image_url: '',
+    link_url: '',
     description: '',
   });
   const [submitting, setSubmitting] = useState(false);
@@ -33,13 +33,13 @@ const WebsiteWrite = () => {
 
   const loadItem = async () => {
     setLoading(true);
-    const data = await getWebsiteById(id);
+    const data = await getGalleryItemById(id);
     if (data) {
       setForm({
         title: data.title || '',
-        category: data.category || 'education',
-        url: data.url || '',
+        category: data.category || 'artwork',
         image_url: data.image_url || '',
+        link_url: data.link_url || '',
         description: data.description || '',
       });
     }
@@ -48,32 +48,32 @@ const WebsiteWrite = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.title.trim() || !form.url.trim()) return;
+    if (!form.title.trim() || !form.image_url.trim()) return;
 
     setSubmitting(true);
     try {
       const itemData = {
         title: form.title.trim(),
         category: form.category,
-        url: form.url.trim(),
-        image_url: form.image_url.trim() || null,
+        image_url: form.image_url.trim(),
+        link_url: form.link_url.trim() || null,
         description: form.description.trim(),
       };
 
       let item;
       if (isEdit) {
-        item = await updateWebsite(id, itemData);
-        showToast(t('site.websites.updated'), 'success');
+        item = await updateGalleryItem(id, itemData);
+        showToast(t('site.gallery.updated'), 'success');
       } else {
-        item = await createWebsite({
+        item = await createGalleryItem({
           ...itemData,
           user_id: user.id,
           author_name: user.user_metadata?.full_name || user.email,
         });
-        showToast('사이트가 등록되었습니다.', 'success');
+        showToast('작품이 등록되었습니다.', 'success');
       }
-      navigate(`/community/websites/${item.id}`);
-    } catch (err) {
+      navigate(`/community/gallery/${item.id}`);
+    } catch (err: any) {
       showToast(err.message, 'error');
     } finally {
       setSubmitting(false);
@@ -90,11 +90,11 @@ const WebsiteWrite = () => {
     );
   }
 
-  const pageTitle = isEdit ? t('site.websites.editTitle') : t('site.websites.writeTitle');
+  const pageTitle = isEdit ? t('site.gallery.editTitle') : t('site.gallery.writeTitle');
 
   return (
     <>
-      <SEOHead title={pageTitle} path={isEdit ? `/community/websites/edit/${id}` : '/community/websites/write'} noindex />
+      <SEOHead title={pageTitle} path={isEdit ? `/community/gallery/edit/${id}` : '/community/gallery/write'} noindex />
 
       <section className="page-header">
         <div className="container">
@@ -106,67 +106,66 @@ const WebsiteWrite = () => {
         <div className="container">
           <form className="board-write-form" onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>{t('site.websites.category')}</label>
+              <label>{t('site.gallery.category')}</label>
               <select
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
               >
-                <option value="education">{t('site.websites.education')}</option>
-                <option value="devtool">{t('site.websites.devtool')}</option>
-                <option value="design">{t('site.websites.design')}</option>
-                <option value="ai">{t('site.websites.ai')}</option>
-                <option value="reference">{t('site.websites.reference')}</option>
+                <option value="coding">{t('site.gallery.coding')}</option>
+                <option value="artwork">{t('site.gallery.artwork')}</option>
+                <option value="project">{t('site.gallery.project')}</option>
+                <option value="screenshot">{t('site.gallery.screenshot')}</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label>{t('site.websites.titleLabel')}</label>
+              <label>{t('site.gallery.titleLabel')}</label>
               <input
                 type="text"
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                placeholder={t('site.websites.titlePlaceholder')}
+                placeholder={t('site.gallery.titlePlaceholder')}
                 required
               />
             </div>
 
             <div className="form-group">
-              <label>{t('site.websites.url')}</label>
-              <input
-                type="url"
-                value={form.url}
-                onChange={(e) => setForm({ ...form, url: e.target.value })}
-                placeholder={t('site.websites.urlPlaceholder')}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>{t('site.websites.imageUrl')}</label>
+              <label>{t('site.gallery.imageUrl')}</label>
               <input
                 type="url"
                 value={form.image_url}
                 onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                placeholder={t('site.websites.imageUrlPlaceholder')}
+                placeholder={t('site.gallery.imageUrlPlaceholder')}
+                required
               />
             </div>
 
             <div className="form-group">
-              <label>{t('site.websites.description')}</label>
+              <label>{t('site.gallery.linkUrl')}</label>
+              <input
+                type="url"
+                value={form.link_url}
+                onChange={(e) => setForm({ ...form, link_url: e.target.value })}
+                placeholder={t('site.gallery.linkUrlPlaceholder')}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>{t('site.gallery.description')}</label>
               <textarea
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                placeholder={t('site.websites.descriptionPlaceholder')}
+                placeholder={t('site.gallery.descriptionPlaceholder')}
                 rows={6}
               />
             </div>
 
             <div className="form-actions">
-              <button type="button" className="board-btn" onClick={() => navigate('/community/websites')}>
-                {t('site.websites.cancel')}
+              <button type="button" className="board-btn" onClick={() => navigate('/community/gallery')}>
+                {t('site.gallery.cancel')}
               </button>
               <button type="submit" className="board-btn primary" disabled={submitting}>
-                {submitting ? t('site.websites.submitting') : t('site.websites.submit')}
+                {submitting ? t('site.gallery.submitting') : t('site.gallery.submit')}
               </button>
             </div>
           </form>
@@ -176,4 +175,4 @@ const WebsiteWrite = () => {
   );
 };
 
-export default WebsiteWrite;
+export default GalleryWrite;

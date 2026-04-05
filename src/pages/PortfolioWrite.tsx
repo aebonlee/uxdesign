@@ -73,7 +73,7 @@ const PortfolioWrite = () => {
         showToast('포트폴리오가 등록되었습니다.', 'success');
       }
       navigate(`/community/portfolio/${item.id}`);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     } finally {
       setSubmitting(false);

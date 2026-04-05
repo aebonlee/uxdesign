@@ -89,7 +89,7 @@ const LectureWrite = () => {
         showToast(t('site.lectures.created'), 'success');
       }
       navigate(`/references/${lecture.id}`);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     } finally {
       setSubmitting(false);

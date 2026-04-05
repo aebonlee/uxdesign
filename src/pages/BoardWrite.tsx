@@ -34,7 +34,7 @@ const BoardWrite = () => {
       });
       showToast('게시글이 등록되었습니다.', 'success');
       navigate(`/community/board/${post.id}`);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     } finally {
       setSubmitting(false);

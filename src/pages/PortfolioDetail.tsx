@@ -48,7 +48,7 @@ const PortfolioDetail = () => {
       await deletePortfolio(id);
       showToast('삭제되었습니다.', 'success');
       navigate('/community/portfolio');
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     }
   };
@@ -66,7 +66,7 @@ const PortfolioDetail = () => {
       setCommentText('');
       const cmts = await getPortfolioComments(id);
       setComments(cmts);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     } finally {
       setSubmitting(false);
@@ -79,7 +79,7 @@ const PortfolioDetail = () => {
       await deletePortfolioComment(commentId);
       const cmts = await getPortfolioComments(id);
       setComments(cmts);
-    } catch (err) {
+    } catch (err: any) {
       showToast(err.message, 'error');
     }
   };

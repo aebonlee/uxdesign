@@ -40,7 +40,7 @@ const Login = () => {
     try {
       await signInWithEmail(form.email, form.password);
       navigate(from, { replace: true });
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || t('auth.loginError'));
     } finally {
       setLoading(false);
@@ -52,7 +52,7 @@ const Login = () => {
     try {
       if (provider === 'google') await signInWithGoogle();
       else if (provider === 'kakao') await signInWithKakao();
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || t('auth.loginError'));
     }
   };
