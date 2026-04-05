@@ -160,7 +160,7 @@ const Lectures = () => {
                             </tr>
                             {isExpanded && (
                               <tr className="ref-dropdown-row">
-                                <td colSpan="3">
+                                <td colSpan={3}>
                                   <div className="ref-dropdown-content">
                                     {lecture.content ? (
                                       <div className="ref-content-text">

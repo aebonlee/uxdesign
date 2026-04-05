@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { searchPosts } from '../utils/supabase';
 
-const SearchModal = ({ isOpen, onClose }) => {
+const SearchModal = ({ isOpen, onClose }: any) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const inputRef = useRef(null);

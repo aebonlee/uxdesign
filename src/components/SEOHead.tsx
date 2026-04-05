@@ -1,6 +1,6 @@
 import { useLanguage } from '../contexts/LanguageContext';
 
-const SEOHead = ({ title, description, path = '', ogImage, noindex = false }) => {
+const SEOHead = ({ title, description, path = '', ogImage, noindex = false }: any) => {
   const SITE = '고객경험디자인 콘텐츠 전략 | UX Design';
   const BASE = 'https://uxdesign.dreamitbiz.com';
   const DEFAULT_DESC = '고객경험디자인(CXD) 콘텐츠 전략 학습 - UX 리서치, 콘텐츠 전략, 비주얼 디자인까지 한곳에서';

@@ -590,7 +590,7 @@ const UxWeek10 = () => {
                   </tr>
                   <tr>
                     <td>p-value</td>
-                    <td colSpan="2">0.12</td>
+                    <td colSpan={2}>0.12</td>
                   </tr>
                 </tbody>
               </table>
