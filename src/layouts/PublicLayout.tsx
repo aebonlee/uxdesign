@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import AuthGuard from '../components/AuthGuard';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { LicenseProvider } from '../components/LicenseGuard';
+import LockOverlay from '../components/LockOverlay';
 import useCodeCopy from '../hooks/useCodeCopy';
 import useTableScroller from '../hooks/useTableScroller';
 
@@ -79,6 +81,7 @@ const PublicLayout = () => {
   useTableScroller();
 
   return (
+    <LicenseProvider>
     <div className="site-wrapper">
       <Navbar />
       <main className="site-main">
@@ -172,7 +175,9 @@ const PublicLayout = () => {
         </Suspense>
       </main>
       <Footer />
+      <LockOverlay />
     </div>
+    </LicenseProvider>
   );
 };
 
