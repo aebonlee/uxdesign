@@ -73,6 +73,14 @@ export function LicenseProvider({ children }: { children: ReactNode }) {
         return;
       }
 
+      // 최고관리자 바이패스
+      const email = (user.email || '').toLowerCase();
+      if (email === 'aebon@kakao.com' || email === 'aebon@kyonggi.ac.kr') {
+        setHasLicense(true);
+        setLicenseLoading(false);
+        return;
+      }
+
       try {
         const cached = localStorage.getItem(LICENSE_CACHE_KEY);
         if (cached) {
@@ -92,6 +100,23 @@ export function LicenseProvider({ children }: { children: ReactNode }) {
       });
 
       let result = error ? false : !!data;
+
+      // user_licenses 테이블 확인 (결제/쿠폰 라이선스)
+      if (!result) {
+        try {
+          const { data: licData } = await supabase
+            .from('user_licenses')
+            .select('id, license_type, site_slug, expires_at')
+            .eq('user_id', user.id);
+          if (licData && licData.length > 0) {
+            const now = new Date();
+            result = licData.some((lic: Record<string, unknown>) => {
+              if (lic.expires_at && new Date(lic.expires_at as string) < now) return false;
+              return lic.license_type === 'bundle' || lic.site_slug === SITE_SLUG;
+            });
+          }
+        } catch { /* user_licenses check failed */ }
+      }
 
       if (!result) {
         try {
