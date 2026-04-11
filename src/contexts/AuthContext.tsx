@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
         if (prev) console.warn('Auth: INITIAL_SESSION timeout, forcing loading=false');
         return false;
       });
-    }, 5000);
+    }, 3000);
 
     return () => {
       clearTimeout(fallbackTimer);
