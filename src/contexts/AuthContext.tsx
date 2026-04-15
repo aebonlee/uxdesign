@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import getSupabase, { updateLastLogin, setSharedSession, getSharedSession, clearSharedSession } from '../utils/supabase';
-import { getProfile, updateProfile, signOut as authSignOut } from '../utils/auth';
+import { getProfile, updateProfile, signOut as authSignOut, signInWithGoogle, signInWithKakao } from '../utils/auth';
 import { ADMIN_EMAILS } from '../config/admin';
 
 const AuthContext = createContext<any>(null);
@@ -149,6 +149,8 @@ export const AuthProvider = ({ children }) => {
       isAdmin,
       signOut,
       refreshProfile,
+      signInWithGoogle,
+      signInWithKakao,
       accountBlock,
       clearAccountBlock: () => setAccountBlock(null),
     }}>
